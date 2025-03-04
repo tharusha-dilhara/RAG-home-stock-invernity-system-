@@ -1,0 +1,4 @@
+flask
+sentence-transformers
+langchain_nvidia_ai_endpoints
+faiss-cpu

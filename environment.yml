@@ -1,0 +1,11 @@
+name: rag_project_env
+channels:
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - faiss-cpu
+  - flask
+  - pip:
+      - sentence-transformers
+      - langchain_nvidia_ai_endpoints
