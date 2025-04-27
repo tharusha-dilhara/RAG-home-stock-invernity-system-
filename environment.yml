@@ -9,3 +9,11 @@ dependencies:
   - pip:
       - sentence-transformers
       - langchain_nvidia_ai_endpoints
+      - scikit-learn
+      - langchain-nvidia-ai-endpoints
+      - python-dateutil
+      - requests
+      - pymongo
+      - bcrypt
+      - numpy
+      - flask-cors
