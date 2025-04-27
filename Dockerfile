@@ -1,25 +1,21 @@
-FROM continuumio/miniconda3:latest
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy environment file first to leverage Docker cache
-COPY environment.yml .
+# Copy the current directory contents into the container at /app
+COPY . /app
 
-# Create the Conda environment
-RUN conda env create -f environment.yml
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    && rm -rf /var/lib/apt/lists/*
 
-# Make RUN commands use the new environment
-SHELL ["conda", "run", "-n", "rag_project_env", "/bin/bash", "-c"]
+# Install dependencies
+RUN pip install --no-cache-dir flask faiss-cpu sentence-transformers langchain_nvidia_ai_endpoints
 
-# Copy application files
-COPY . .
-
-# Install additional Python dependencies using pip
-RUN pip install pymongo==4.6.2 python-dateutil==2.8.2
-
-# Ensure the environment is activated
-ENV PATH /opt/conda/envs/rag_project_env/bin:$PATH
-
+# Expose the port the app runs on
 EXPOSE 7000
 
-CMD ["conda", "run", "--no-capture-output", "-n", "rag_project_env", "python", "app.py"]
+# Run the Flask app
+CMD ["python", "app.py"]
